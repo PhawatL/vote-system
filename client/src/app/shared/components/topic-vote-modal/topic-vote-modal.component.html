@@ -1,0 +1,55 @@
+@if (selectedTopic) {
+	<div class="modal-header">
+		<h5 class="modal-title">{{ selectedTopic.name }}</h5>
+		<button type="button" class="btn-close" aria-label="Close" (click)="onClose()"></button>
+	</div>
+	<div class="modal-body">
+		<p class="description">{{ selectedTopic.description }}</p>
+		<p class="total-votes">ผู้โหวตแล้ว {{ getTopicTotalVotes(selectedTopic) }} คน</p>
+
+		<div class="vote-options">
+			@for (option of selectedTopic.options; track option.id) {
+				<button
+					type="button"
+					class="vote-option"
+					[class.selected]="selectedOptionId === option.id"
+					[class.show-percent]="hasVoted(selectedTopic.id)"
+					[disabled]="hasVoted(selectedTopic.id)"
+					(click)="onOptionSelect(option.id)"
+				>
+					<div class="label-row">
+						<span>{{ option.name }}</span>
+						@if (hasVoted(selectedTopic.id)) {
+							<span>{{ getOptionPercentage(selectedTopic, option) | number: '1.0-0' }}%</span>
+						}
+					</div>
+
+					@if (hasVoted(selectedTopic.id)) {
+						<ngb-progressbar
+							class="mt-2"
+							type="success"
+							[value]="getOptionPercentage(selectedTopic, option)"
+							[showValue]="false"
+						/>
+					}
+				</button>
+			}
+		</div>
+
+		@if (voteError) {
+			<p class="error mt-2 mb-0">{{ voteError }}</p>
+		}
+	</div>
+	@if (!hasVoted(selectedTopic.id)) {
+		<div class="modal-footer">
+			<button
+				type="button"
+				class="submit-vote"
+				[disabled]="selectedOptionId === null || isVoting"
+				(click)="onVote()"
+			>
+				{{ isVoting ? 'กำลังโหวต...' : 'Vote' }}
+			</button>
+		</div>
+	}
+}

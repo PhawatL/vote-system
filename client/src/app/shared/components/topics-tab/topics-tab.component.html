@@ -1,0 +1,50 @@
+<section class="topics pt-3">
+	@if (isLoadingTopics) {
+		<p class="hint">กำลังโหลด topics...</p>
+	} @else if (topicsError) {
+		<p class="error">{{ topicsError }}</p>
+	} @else if (!topics.length) {
+		<p class="hint">ยังไม่มี topic</p>
+	} @else {
+		<div class="table-controls">
+			<label for="pageSizeSelect" class="page-size-label">รายการต่อหน้า</label>
+			<select
+				id="pageSizeSelect"
+				[(ngModel)]="pageSize"
+				(change)="onPageSizeChange(pageSize)"
+			>
+				@for (size of pageSizeOptions; track size) {
+					<option [ngValue]="size">{{ size }}</option>
+				}
+			</select>
+		</div>
+
+		<div class="topic-list">
+			@for (topic of topics; track topic.id) {
+				<button type="button" class="topic-card" (click)="onOpenTopic(topic)">
+					<div>
+						<h3>{{ topic.name }}</h3>
+						<p>{{ topic.description }}</p>
+					</div>
+					<div class="topic-meta">
+						<span>{{ getTopicTotalVotes(topic) }} votes</span>
+						@if (hasVoted(topic.id)) {
+							<span class="voted-badge">Voted</span>
+						}
+					</div>
+				</button>
+			}
+		</div>
+
+		<div class="pagination mt-3">
+			<ngb-pagination
+				[collectionSize]="totalForPagination"
+				[pageSize]="pageSize"
+				[page]="page"
+				[maxSize]="25"
+				[boundaryLinks]="true"
+				(pageChange)="onPageChange($event)"
+			/>
+		</div>
+	}
+</section>

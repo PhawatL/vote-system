@@ -1,0 +1,50 @@
+<main class="page">
+  <section class="container">
+    <header>
+      <h1>Vote App</h1>
+      <p class="subtitle">Voter ID: {{ voterId }}</p>
+    </header>
+
+    <ul ngbNav #nav="ngbNav" [(activeId)]="activeTab" class="nav-tabs" (activeIdChange)="setTab($event)">
+      <li [ngbNavItem]="'topics'">
+        <button ngbNavLink>Home</button>
+        <ng-template ngbNavContent>
+          <app-topics-tab
+            [isLoadingTopics]="isLoadingTopics"
+            [topicsError]="topicsError"
+            [topics]="topics"
+            [page]="page"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions"
+            [totalForPagination]="totalForPagination"
+            [votedMap]="currentVotedMap"
+            (topicSelected)="openTopicModal($event, topicVoteModal)"
+            (pageChanged)="onPageChange($event)"
+            (pageSizeChanged)="onPageSizeChange($event)"
+          ></app-topics-tab>
+        </ng-template>
+      </li>
+
+      <li [ngbNavItem]="'create'">
+        <button ngbNavLink>Create vote</button>
+        <ng-template ngbNavContent>
+          <app-create-topic-form (topicCreated)="onTopicCreated()"></app-create-topic-form>
+        </ng-template>
+      </li>
+    </ul>
+
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+  </section>
+</main>
+
+<ng-template #topicVoteModal>
+  <app-topic-vote-modal
+    [selectedTopic]="selectedTopic"
+    [(selectedOptionId)]="selectedOptionId"
+    [isVoting]="isVoting"
+    [voteError]="voteError"
+    [votedMap]="currentVotedMap"
+    (vote)="voteSelectedOption()"
+    (close)="closeTopicModal()"
+  ></app-topic-vote-modal>
+</ng-template>

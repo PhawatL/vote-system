@@ -1,0 +1,57 @@
+<section class="create-topic pt-3">
+	<label>
+		<span>Topic</span>
+		<input type="text" [(ngModel)]="topicName" maxlength="100" />
+		<small class="counter">{{ topicName.length }}/100</small>
+	</label>
+
+	<label>
+		<span>Description</span>
+		<textarea
+			rows="4"
+			maxlength="1000"
+			[(ngModel)]="topicDescription"
+			placeholder="อธิบาย topic นี้"
+		></textarea>
+		<small class="counter">{{ topicDescription.length }}/1000</small>
+	</label>
+
+	<div class="options-block">
+		<div class="options-header">
+			<span>Options</span>
+			<button type="button" class="btn btn-outline-primary btn-sm" (click)="addOptionField()">+ Add</button>
+		</div>
+
+		<div class="option-list">
+			@for (option of topicOptions; track $index) {
+				<div class="option-row">
+					<input
+						type="text"
+						[(ngModel)]="topicOptions[$index]"
+						[placeholder]="'Option ' + ($index + 1)"
+					/>
+					<button
+						type="button"
+						class="remove btn btn-outline-secondary"
+						[disabled]="topicOptions.length <= 2"
+						(click)="removeOptionField($index)"
+					>
+						Remove
+					</button>
+				</div>
+			}
+		</div>
+	</div>
+
+	@if (createError) {
+		<p class="error">{{ createError }}</p>
+	}
+
+	@if (createSuccess) {
+		<p class="success">{{ createSuccess }}</p>
+	}
+
+	<button type="button" class="submit" [disabled]="isCreatingTopic" (click)="submitCreateTopic()">
+		{{ isCreatingTopic ? 'กำลังสร้าง...' : 'Create Topic' }}
+	</button>
+</section>

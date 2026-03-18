@@ -1,0 +1,82 @@
+.topics {
+	margin-top: 16px;
+}
+
+.table-controls {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+.page-size-label {
+	font-size: 13px;
+	color: #6b7280;
+}
+
+select {
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+	padding: 6px 10px;
+	background: #ffffff;
+	font-size: 14px;
+}
+
+.topic-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	gap: 12px;
+}
+
+.topic-card {
+	border: 1px solid #e5e7eb;
+	background: #ffffff;
+	text-align: left;
+	border-radius: 12px;
+	padding: 14px;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.topic-card h3 {
+	margin: 0;
+	font-size: 18px;
+}
+
+.topic-card p {
+	margin: 8px 0 0;
+	color: #4b5563;
+}
+
+.topic-meta {
+	display: flex;
+	justify-content: space-between;
+	color: #6b7280;
+	font-size: 13px;
+}
+
+.voted-badge {
+	background: #dcfce7;
+	color: #166534;
+	border-radius: 99px;
+	padding: 2px 8px;
+}
+
+.pagination {
+	margin-top: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 14px;
+}
+
+.hint {
+	color: #6b7280;
+}
+
+.error {
+	color: #b91c1c;
+}
